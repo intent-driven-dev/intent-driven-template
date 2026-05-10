@@ -1,0 +1,277 @@
+name: intent-driven
+version: 1
+description: Intent-driven OpenSpec workflow - proposal -> Gherkin-style specs -> design -> adr -> tasks
+artifacts:
+  - id: proposal
+    generates: proposal.md
+    description: Initial proposal document outlining the change
+    template: proposal.md
+    instruction: >
+      Create the proposal document that establishes WHY this change is needed.
+
+
+      Sections:
+
+      - **Why**: 1-2 sentences on the problem or opportunity. What problem does
+      this solve? Why now?
+
+      - **What Changes**: Bullet list of changes. Be specific about new
+      capabilities, modifications, or removals. Mark breaking changes with
+      **BREAKING**.
+
+      - **Capabilities**: Identify which behaviour specs will be created or modified:
+        - **New Capabilities**: List capabilities being introduced. Each becomes a new `specs/<name>/spec.md`. Use kebab-case names (e.g., `user-auth`, `data-export`).
+        - **Modified Capabilities**: List existing capabilities whose behaviour is changing. Only include if spec-level behaviour changes, not just implementation details. Each needs an OpenSpec Markdown delta file at `specs/<name>/spec.md`. Check `openspec/specs/` for existing spec names. Leave empty if no behaviour changes.
+      - **Impact**: Affected code, APIs, dependencies, or systems.
+
+
+      IMPORTANT: The Capabilities section is critical. It creates the contract
+      between proposal and specs phases. Research existing specs before filling
+      this in. Each capability listed here will need a corresponding spec file.
+
+
+      Durable architectural decisions worth carrying across changes are
+      distilled into ADR files at <repo>/adr/ by a later step after design.
+
+
+      Keep it concise (1-2 pages). Focus on the "why" not the "how" -
+      implementation details belong in design.md.
+
+
+      This is the foundation - specs, design, adr, and tasks all build on this.
+    requires: []
+  - id: specs
+    generates: specs/**/*.md
+    description: OpenSpec Markdown specs with Gherkin-style behaviour scenarios
+    template: spec.md
+    instruction: >
+      Create OpenSpec Markdown spec files that define WHAT the system should do.
+      The Markdown structure is the OpenSpec merge wrapper; the requirement and
+      scenario content inside that wrapper should be written in Gherkin style.
+
+
+      Create one spec file per capability listed in the proposal's Capabilities
+      section.
+
+      - New capabilities: use the exact kebab-case name from the proposal
+      (specs/<capability>/spec.md).
+
+      - Modified capabilities: use the existing spec folder name from
+      openspec/specs/<capability>/ when creating the delta spec at
+      specs/<capability>/spec.md.
+
+
+      Delta operations (use ## headers exactly so OpenSpec archive can merge):
+
+      - **ADDED Requirements**: New behaviour capabilities.
+
+      - **MODIFIED Requirements**: Changed behaviour - MUST include the full
+      updated requirement content, not a partial diff.
+
+      - **REMOVED Requirements**: Deprecated behaviours - MUST include
+      **Reason** and **Migration**.
+
+      - **RENAMED Requirements**: Name changes only - use FROM:/TO: format.
+
+
+      OpenSpec wrapper requirements:
+
+      - Each requirement MUST use `### Requirement: <name>`.
+
+      - Each scenario MUST use `#### Scenario: <name>`. This exact four-hash
+      heading is required for OpenSpec validation and archive.
+
+      - Every requirement MUST have at least one scenario.
+
+
+      Gherkin-style content requirements:
+
+      - Treat each requirement as the feature or business rule being specified.
+      You may include `Feature:` or `Rule:` prose in the requirement body when
+      it clarifies the behaviour.
+
+      - Each scenario MUST describe behaviour with `GIVEN`, `WHEN`, and `THEN`
+      steps. Use `AND` or `BUT` for follow-on steps.
+
+      - Write observable outcomes in `THEN` steps. Avoid implementation details
+      such as database table names, private methods, or UI selectors unless
+      they are part of the domain contract.
+
+      - Do not create `.feature` files for this artifact. External Gherkin
+      linting is outside this schema; `spec.md` is required for OpenSpec merge.
+
+
+      MODIFIED requirements workflow:
+
+      1. Locate the existing requirement in openspec/specs/<capability>/spec.md.
+
+      2. Copy the ENTIRE requirement block (from `### Requirement:` through all
+      scenarios).
+
+      3. Paste under `## MODIFIED Requirements` and edit it so the copied block
+      represents the full desired behaviour after the change.
+
+      4. Ensure header text matches exactly (whitespace-insensitive).
+
+
+      Common pitfall: Using MODIFIED with partial content loses detail at
+      archive time. If adding new concerns without changing existing behaviour,
+      use ADDED instead.
+    requires:
+      - proposal
+  - id: design
+    generates: design.md
+    description: Technical design document with implementation details
+    template: design.md
+    instruction: >
+      Create the design document that explains HOW to implement the change.
+
+
+      When to include design.md (create only if any apply):
+
+      - Cross-cutting change (multiple services/modules) or new architectural
+      pattern
+
+      - New external dependency or significant data model changes
+
+      - Security, performance, or migration complexity
+
+      - Ambiguity that benefits from technical decisions before coding
+
+
+      Prior decisions (read existing ADRs first):
+
+      Before writing, list every file in <repo>/adr/. Build the supersession
+      graph from each ADR's Supersedes field - an ADR is no longer in force if
+      a later ADR's Supersedes points at it. Only the currently-in-force ADRs
+      (accepted, not superseded) constrain this design. Older superseded ADRs
+      are historical context only and MUST NOT be treated as live commitments.
+      New design choices MUST be coherent with the in-force set. If a current
+      ADR needs to be revisited, do not propose modifying it; flag it under
+      Open Questions and let the adr step record a new superseding ADR.
+
+
+      Sections:
+
+      - **Context**: Background, current state, constraints, stakeholders
+
+      - **Goals / Non-Goals**: What this design achieves and explicitly excludes
+
+      - **Decisions**: Key technical choices with rationale (why X over Y?).
+      Include alternatives considered for each decision.
+
+      - **Risks / Trade-offs**: Known limitations, things that could go wrong.
+      Format: [Risk] -> Mitigation
+
+      - **Migration Plan**: Steps to deploy, rollback strategy (if applicable)
+
+      - **Open Questions**: Outstanding decisions or unknowns to resolve.
+      Include any in-force ADRs that this design suggests revisiting; the adr
+      step will record the supersession.
+
+
+      Focus on architecture and approach, not line-by-line implementation.
+
+      Reference the proposal for motivation and specs for requirements.
+
+
+      Good design docs explain the "why" behind technical decisions.
+    requires:
+      - proposal
+  - id: adr
+    generates: "../../../adr/*.md"
+    description: Architecture Decision Records distilled from design for future reference
+    template: adr.md
+    instruction: >
+      Distill significant decisions from design.md into Architecture Decision
+      Records that live in <repo>/adr/ and persist across changes. The path
+      <repo>/adr/ means the target repository's top-level adr/ folder beside
+      openspec/, not any folder inside openspec/. ADR files MUST be written
+      outside openspec/ and MUST NOT be written under
+      openspec/changes/<change>/.
+
+
+      IRON RULE - ADRs are immutable once accepted. You MUST NOT edit a prior
+      ADR file under any circumstance, not its Status, not its body, not its
+      date. To change a previously accepted decision, record a NEW ADR whose
+      Status is "accepted, supersedes ADR-NNNN" and whose `Supersedes:` field
+      names the prior one. Design consumers derive what is currently in force
+      by walking Supersedes links across the folder. The prior ADR's contents
+      stay frozen as a historical record.
+
+
+      Process:
+
+      1. Read every existing ADR in <repo>/adr/. Build the supersession graph
+      from each ADR's Supersedes field. Note the highest sequence number in
+      use.
+
+      2. Re-read design.md. Identify decisions that meet ALL of these:
+
+      - Establish a long-term architectural commitment (pattern, technology,
+      boundary, contract) - not a tactical implementation detail.
+
+      - Will affect future changes beyond this one.
+
+      - Either aren't already captured by a currently-in-force ADR, OR
+      intentionally diverge from one. If diverging, the new ADR supersedes the
+      prior.
+
+      3. For each qualifying decision, create a NEW file at
+      <repo>/adr/NNNN-kebab-title.md, where NNNN is a 4-digit sequence one
+      greater than the highest existing. Use the template (MADR-short). If
+      this decision replaces a prior in-force ADR, set Status to
+      "accepted, supersedes ADR-NNNN", populate the `Supersedes:` field, and
+      explain in Context why the prior decision is being revisited. Do NOT
+      touch the prior ADR's file.
+
+      4. If nothing meets the bar, do not invent ADRs. The step still completes
+      as long as <repo>/adr/ already contains at least one ADR file.
+
+
+      Filename convention: NNNN-kebab-title.md (e.g.,
+      0042-use-postgres-for-catalog.md). Sequence is monotonic across the
+      whole repo and never reused.
+    requires:
+      - design
+  - id: tasks
+    generates: tasks.md
+    description: Implementation checklist with trackable tasks
+    template: tasks.md
+    instruction: >
+      Create the task list that breaks down the implementation work.
+
+
+      **IMPORTANT: Follow the template below exactly.** The apply phase parses
+      checkbox format to track progress. Tasks not using `- [ ]` won't be
+      tracked.
+
+
+      Guidelines:
+
+      - Group related tasks under ## numbered headings.
+
+      - Each task MUST be a checkbox: `- [ ] X.Y Task description`.
+
+      - Tasks should be small enough to complete in one session.
+
+      - Order tasks by dependency (what must be done first?).
+
+      - If implementation changes behaviour specs, include a task to run
+      `openspec validate <change> --type change --strict` before archive.
+
+
+      Reference specs for what to build, design for how to build it, and
+      <repo>/adr/ for durable architectural commitments to honor.
+
+      Each task should be verifiable - you know when it's done.
+    requires:
+      - specs
+      - adr
+apply:
+  requires:
+    - tasks
+  tracks: tasks.md
+  instruction: |
+    Read context files, work through pending tasks, mark complete as you go.
+    Pause if you hit blockers or need clarification.
