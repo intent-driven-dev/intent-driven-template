@@ -1,0 +1,58 @@
+<!-- intent-driven:begin -->
+## Intent-Driven 工作流
+
+本项目采用 intent-driven 规约驱动开发。每个变更按 5 个 artifact 顺序流转，
+后续 artifact 必须建立在前置 artifact 之上：
+
+```
+proposal → specs → design → adr → tasks
+```
+
+- **proposal**：陈述"为什么要做"，列出会创建或修改的 capabilities
+- **specs**：用 Gherkin 风格（`GIVEN / WHEN / THEN`）描述可观测行为
+- **design**：技术方案、关键决策、权衡、迁移计划
+- **adr**：长期架构决策，写入仓库根的 `adr/`，**不可改**（需要变更则新建 ADR 并 supersede 旧的）
+- **tasks**：可勾选的实现清单，按依赖排序
+
+### Slash 命令
+
+| 命令 | 用途 |
+| --- | --- |
+| `/opsx-new <name>` | 新建变更，仅展示第一个 artifact 模板，等用户确认 |
+| `/opsx-propose <name>` | 一次性生成 apply 所需的全部 artifacts |
+| `/opsx-continue [name]` | 继续推进当前变更的下一个 artifact |
+| `/opsx-apply [name]` | 按 tasks 执行实现，逐条勾选 |
+| `/opsx-verify [name]` | 核对实现与 specs/design 的一致性，输出三维报告 |
+| `/opsx-archive [name]` | 归档已完成变更（必须先合回 `main`） |
+| `/opsx-sync [name]` | 把 delta specs 合并到主 specs |
+| `/opsx-explore [topic]` | 探索模式：只思考、不实现 |
+| `/opsx-bulk-apply` | 多变更并行 worktree 实现 |
+
+### Git 纪律（关键）
+
+- **propose → apply**：proposal artifacts 必须先合入 `main`，apply 才能开始
+- **apply → archive**：implementation 必须先合回 `main`，archive 才能开始
+- 不会代你 commit / branch / merge，除非你显式要求
+- 完整规则见 `.claude/skills/openspec-git-discipline/SKILL.md`
+
+### Schema
+
+当前激活：`intent-driven`（见 `openspec/config.yaml`）。
+本仓库内嵌 schema 副本：`openspec/schemas/intent-driven/`，离线可验证。
+
+```bash
+openspec list                              # 列出所有变更
+openspec status --change <name>            # 查看某变更的 artifact 状态
+openspec schema validate intent-driven     # 验证 schema
+```
+
+### 配套 skills
+
+`.claude/skills/` 内置：
+- `architectural-decision-records` —— ADR 5 种模板（Nygard / MADR / Y-statement / 自定义）
+- `c4-diagrams` —— C4 架构图（ASCII / Mermaid）
+- `gherkin-authoring` —— Gherkin 行为规约最佳实践
+- `grill-me` —— 设计追问，逐分支澄清决策
+- `openspec-git-discipline` —— git 流转关卡
+- 9 个 `openspec-*` —— 对应 `/opsx-*` 命令的执行细节
+<!-- intent-driven:end -->
