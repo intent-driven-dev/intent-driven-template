@@ -1,0 +1,35 @@
+<!-- intent-driven:begin -->
+## Intent-Driven 工作流
+
+5 个 artifact 顺序流转，后者依赖前者：
+`proposal → specs → design → adr → tasks`
+
+- **proposal** 为什么做 / **specs** Gherkin 行为 / **design** 方案权衡
+- **adr** 长期决策（写入 `adr/`，不可改，需变更则 supersede 旧版）
+- **tasks** 可勾选清单，按依赖排序
+
+### Slash 命令
+
+| 命令 | 用途 |
+| --- | --- |
+| `/opsx-new <name>` | 新建变更，逐 artifact 推进 |
+| `/opsx-propose <name>` | 一次生成 apply 所需全部 artifacts |
+| `/opsx-continue [name]` | 推进下一个 artifact |
+| `/opsx-apply [name]` | 执行 tasks（**开始前会停下询问确认**） |
+| `/opsx-verify [name]` | 核对实现与 specs/design 一致性 |
+| `/opsx-archive [name]` | 归档（需先合回 `main`） |
+| `/opsx-sync [name]` | 把 delta specs 合到主 specs |
+| `/opsx-explore [topic]` | 探索模式，只思考不写代码 |
+| `/opsx-bulk-apply` | 多变更并行 worktree 实现（**开始前会停下询问确认**） |
+
+### Git 纪律
+
+- `propose → apply`：proposal 必须先合入 `main`
+- `apply → archive`：implementation 必须先合回 `main`
+- 不会代你 commit / branch / merge
+- 详见 `.claude/skills/openspec-git-discipline/`
+
+### Schema
+
+当前 `intent-driven`（`openspec/config.yaml`），副本在 `openspec/schemas/intent-driven/`。配套 skills 见 `.claude/skills/`。
+<!-- intent-driven:end -->
