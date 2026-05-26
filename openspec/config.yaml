@@ -13,4 +13,4 @@ rules:
   adr:
     - Must use architectural-decision-records skill
   spec:
-    - Must use gherkin-authoring skill
+    - Must use gherkin-authoring skill 
