@@ -94,7 +94,7 @@ Standard OpenSpec lifecycle skills in `.opencode/skills/` — names are self-exp
 | Skill | Location | Purpose |
 |-------|----------|---------|
 | `openspec-bulk-apply-change` | `.opencode/skills/` | Applies multiple active changes concurrently in isolated worktrees with parallel verification. |
-| `adversarial-authoring` | `.opencode/skills/` | Runs author and reviewer agents in sequence to reduce single-perspective bias in drafts. |
+| `adversarial-authoring` | `.opencode/skills/` | Runs author and reviewer agents in sequence to reduce model bias in drafts. |
 | `grill-me` | `.agents/skills/` | Interrogates plans and designs with probing questions to surface hidden assumptions. |
 | `c4-diagrams` | `.agents/skills/` | Visualises system architecture using C4 model levels in ASCII or Mermaid. |
 | `architectural-decision-records` | `.agents/skills/` | Captures architectural decisions with rationale, tradeoffs, and supersession chains. |
