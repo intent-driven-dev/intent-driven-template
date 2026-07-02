@@ -1,82 +1,78 @@
 ---
 name: glossary
-description: Use when authoring or reviewing specifications, requirements, design docs, decision records, implementation plans, domain terminology, technical terms, glossary entries, or wording consistency across related artifacts
+description: Use when authoring or reviewing specs, requirements, design docs, ADRs, tasks, glossary entries, domain terms, technical terms, or wording consistency across artifacts
 ---
 
 # Glossary
 
-## Overview
-
-Use this skill to keep domain and technical terminology consistent while authoring or reviewing specification artifacts.
-
-The goal is higher information density: artifacts can use precise shared terms because those terms are defined once in the repository glossary.
-
-OpenSpec artifacts such as `proposal.md`, `spec.md`, `design.md`, `adr.md`, and `tasks.md` are one example. The skill applies equally to other specification, requirements, design, decision, and planning documents.
-
-## Required Files
-
-Project glossary files should live at the repository root when the project needs them:
-
-| File | Purpose |
-| --- | --- |
-| `glossary/business.md` | Domain, product, user, workflow, and business terms |
-| `glossary/technical.md` | Architecture, implementation, tool, platform, and protocol terms |
-
-Do not assume these files already exist. If a glossary is needed and either file is missing, create it from the reference templates in this skill folder:
-
-- `.agents/skills/glossary/business-template.md`
-- `.agents/skills/glossary/technical-template.md`
+Use existing repository terms before creating new ones.
 
 ## Workflow
 
-1. Identify the specification artifact being authored or reviewed.
-2. Check whether `glossary/business.md` and `glossary/technical.md` exist at the repository root.
-3. If glossary files are needed but missing, create them from the skill reference templates.
-4. Read the relevant glossary files before editing or reviewing the artifact.
-5. Extract terms from the artifact that are domain-specific, technical, overloaded, abbreviated, ambiguous, or repeatedly used.
-6. Compare extracted terms with existing glossary entries.
-7. Update glossary files when a useful term is missing or an existing definition needs clearer wording.
-8. Suggest updates to the artifact itself so it uses glossary terms consistently.
-9. Do not add generic dictionary words or one-off implementation details.
+1. Identify the artifact being authored or reviewed.
+2. Read `glossary/business.md` and/or `glossary/technical.md` when present.
+3. Extract project-specific, technical, overloaded, ambiguous, or repeated concepts.
+4. Compare extracted concepts with existing glossary terms.
+5. If existing terms look close, ask the user whether to reuse one or define a new term.
+6. Use the chosen term consistently in the artifact.
+7. Add new terms to the appropriate glossary file.
+8. Create or update the artifact's companion glossary reference document.
 
-## Entry Format
+Do not add generic dictionary words or one-off implementation details.
 
-Use this table format for both glossary files:
+## Glossary Files
+
+- `glossary/business.md`: domain, product, workflow, and business terms.
+- `glossary/technical.md`: architecture, implementation, platform, and protocol terms.
+
+If a needed glossary file is missing, create it with this table:
 
 ```markdown
 | Term | Definition | Use When | Avoid |
 | --- | --- | --- | --- |
-| Capability | One concise sentence defining the term in this repository. | Where this term should appear in specifications, requirements, design docs, decision records, or plans. | Near-synonyms, overloaded alternatives, or wording that should not be used. |
 ```
 
-Keep definitions short. If a definition needs multiple paragraphs, the term is probably hiding a decision, requirement, or design detail that belongs in a specification artifact.
+New entries use the same table format. Keep definitions to one concise sentence.
 
-## Review Checklist
+## Close-Term Question
 
-When reviewing an artifact against the glossary, report:
+Ask before creating a new term when existing terms may fit:
 
-- Missing terms that should be added to `glossary/business.md` or `glossary/technical.md`.
-- Existing glossary terms used inconsistently in the artifact.
-- Artifact wording that should change to match glossary terminology.
-- Glossary entries that are stale, unclear, duplicated, or too broad.
+```text
+These glossary terms look close to "<concept>":
 
-## Common Mistakes
+- `<existing-term>`: <why it may fit>
+- `<another-term>`: <why it may fit>
 
-| Mistake | Fix |
-| --- | --- |
-| Defining every noun | Define only terms that carry project-specific meaning. |
-| Updating glossary but not artifact text | Also suggest or apply changes to the artifact being authored. |
-| Adding synonyms as separate terms | Pick one preferred term and list alternatives under `Avoid`. |
-| Treating glossary as design documentation | Keep definitions concise; put decisions and trade-offs in design or decision artifacts. |
+Do you want to use one of these existing terms, or define a new term?
+```
 
-## Example Review Output
+Do not proceed with a new term until the user answers, unless no plausible existing term exists.
+
+## Companion Reference
+
+Every authored or edited artifact gets a companion file in the same directory.
+
+Name: remove `.md`, then append `-glossary-reference.md`.
+
+Examples: `proposal-glossary-reference.md`, `design-glossary-reference.md`, `spec-glossary-reference.md`, `adr-glossary-reference.md`, `tasks-glossary-reference.md`.
+
+Format:
 
 ```markdown
-Glossary updates:
-- Add `Capability` to `glossary/business.md` as an observable behavior area owned by a specification.
-- Add `Decision Record` to `glossary/technical.md` as a durable record of an architectural or technical decision.
+# Glossary Reference
 
-Artifact updates:
-- Replace "feature area" with "Capability" in `proposal.md` to match the glossary.
-- Replace "architecture note" with "Decision Record" in `design.md` to match the glossary.
+| Term | Context |
+| --- | --- |
+| <Term> | <Short context for how the artifact uses this glossary term.> |
 ```
+
+If no glossary terms are used, write:
+
+```markdown
+# Glossary Reference
+
+No glossary terms referenced.
+```
+
+Do not copy definitions into companion files.
