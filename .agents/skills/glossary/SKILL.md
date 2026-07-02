@@ -16,7 +16,7 @@ Use existing repository terms before creating new ones.
 5. If existing terms look close, ask the user whether to reuse one or define a new term.
 6. Use the chosen term consistently in the artifact.
 7. Add new terms to the appropriate glossary file.
-8. Create or update the artifact's companion glossary reference document.
+8. For non-glossary artifacts, create or update the artifact's companion glossary reference document.
 
 Do not add generic dictionary words or one-off implementation details.
 
@@ -51,7 +51,9 @@ Do not proceed with a new term until the user answers, unless no plausible exist
 
 ## Companion Reference
 
-Every authored or edited artifact gets a companion file in the same directory.
+Every authored or edited non-glossary artifact gets a companion file in the same directory.
+
+Do not create companion glossary reference files for glossary source files themselves, such as `glossary/business.md` or `glossary/technical.md`.
 
 Name: remove `.md`, then append `-glossary-reference.md`.
 

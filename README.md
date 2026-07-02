@@ -99,7 +99,7 @@ Standard OpenSpec lifecycle skills in `.opencode/skills/` — names are self-exp
 | `c4-diagrams` | `.agents/skills/` | Visualises system architecture using C4 model levels in ASCII or Mermaid. |
 | `architectural-decision-records` | `.agents/skills/` | Captures architectural decisions with rationale, tradeoffs, and supersession chains. |
 | `gherkin-authoring` | `.agents/skills/` | Drafts and improves Gherkin scenarios for observable, domain-language behaviour. |
-| `glossary` | `.agents/skills/` | Maintains consistent business and technical terminology across all specification artifacts. |
+| `glossary` | `.agents/skills/` | Maintains business and technical terminology and companion glossary references for specification artifacts. |
 | `openspec-git-discipline` | `.agents/skills/` | Enforces that proposals reach `main` before apply, and implementation merges before archive. |
 
 ## Agents
