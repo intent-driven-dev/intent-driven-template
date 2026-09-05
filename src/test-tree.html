@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collapsible Node Tree Test</title>
+    <link rel="stylesheet" href="collapsible-tree.css">
+</head>
+<body>
+    <h1>Collapsible Node Tree Demo</h1>
+    
+    <div id="test-container">
+        <!-- The tree will be inserted here by JavaScript -->
+    </div>
+
+    <script src="collapsible-tree.js"></script>
+    <script>
+        // Initialize our component after the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                const tree = new CollapsibleNodeTree('test-container');
+            } catch (error) {
+                console.error('Error initializing collapsible tree:', error);
+            }
+        });
+    </script>
+</body>
+</html>
