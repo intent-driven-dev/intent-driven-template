@@ -1,6 +1,6 @@
 # Intent-Driven Template
 
-An [OpenSpec](https://github.com/Fission-AI/OpenSpec) and [OpenCode](https://opencode.ai/) template with the `proposal -> specs -> design -> adr -> tasks` workflow enabled, plus optional collaboration workflows for teams that choose to adopt them.
+An [OpenSpec](https://github.com/Fission-AI/OpenSpec) template with the `proposal -> specs -> design -> adr -> tasks` workflow enabled, plus optional collaboration workflows for teams that choose to adopt them. It works with both [OpenCode](https://opencode.ai/) and [Command Code](https://commandcode.ai/).
 
 ## Walkthrough
 
@@ -16,16 +16,20 @@ Read the full walkthrough: [SDD with Multi-Model Spec Review and Glossary](https
 
 ### Start A New Project From This Template
 
-Clone this repository, open it with OpenCode, and start working from the bundled
-OpenSpec configuration, commands, skills, and schema.
+Clone this repository, open it with OpenCode or Command Code, and start working
+from the bundled OpenSpec configuration, commands, skills, and schema.
 
 ### Add This Template To An Existing Project
 
-Open your existing project with OpenCode and ask it to install the template:
+Open your existing project with OpenCode (or Command Code) and ask it to install the template:
 
 ```text
 Read and understand https://raw.githubusercontent.com/intent-driven-dev/intent-driven-template/refs/heads/main/INSTALL_TEMPLATE.md and follow the instructions there.
 ```
+
+Command Code discovers the same OpenSpec workflow through its native
+`.commandcode/` directory (skills, commands, and agents), and also loads the
+shared skills under `.agents/skills/`.
 
 ## What This Template Uses
 
@@ -79,6 +83,8 @@ Standard OpenSpec lifecycle skills in `.opencode/skills/` — names are self-exp
 `openspec-new-change`, `openspec-propose`, `openspec-continue-change`, `openspec-explore`,
 `openspec-apply-change`, `openspec-verify-change`, `openspec-sync-specs`, `openspec-archive-change`
 
+The same OpenSpec lifecycle skills are mirrored in `.commandcode/skills/` for Command Code, with tool names adapted to Command Code's native tools.
+
 | Skill | Location | Purpose | Enabled Or Updated By |
 |-------|----------|---------|-----------------------|
 | `openspec-bulk-apply-change` | `.opencode/skills/` | Applies multiple active changes concurrently in isolated worktrees with parallel verification. | Invoke directly with `/opsx:bulk-apply` command when applying multiple active openspec changes. |
@@ -122,3 +128,5 @@ Specialist agents used within skills, in `.opencode/agent/`:
 | `adversarial-reviewer` | Reviews the author's draft with challenges and improvement suggestions. |
 | `senior-dev` | Implements src work test-first through strict red-green-refactor, following the `test-driven-development` skill. |
 | `senior-qa` | Authors acceptance tests, step definitions, and runner configuration, following the `acceptance-test-authoring` skill. |
+
+The same agents are mirrored in `.commandcode/agents/` for Command Code, using Command Code's subagent frontmatter.
