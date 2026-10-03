@@ -1,7 +1,7 @@
 ---
 description: Reviews adversarial-authoring drafts.
 mode: subagent
-model: openai/gpt-5.5
+# model: openai/gpt-5.5
 permission:
   edit: allow
   bash: deny

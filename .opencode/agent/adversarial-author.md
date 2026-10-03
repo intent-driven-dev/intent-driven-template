@@ -1,7 +1,7 @@
 ---
 description: Authors artifacts for adversarial-authoring.
 mode: subagent
-model: opencode/big-pickle
+# model: opencode/big-pickle
 permission:
   edit: allow
   bash: deny
