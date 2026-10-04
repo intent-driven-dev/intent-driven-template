@@ -4,13 +4,13 @@ An [OpenSpec](https://github.com/Fission-AI/OpenSpec) and [OpenCode](https://ope
 
 ## Walkthrough
 
-Read the full walkthrough: [Spec-Driven Development with OpenSpec and OpenCode](https://intent-driven.dev/blog/2026/05/10/spec-driven-development-openspec-opencode/).
+[![Spec-Driven Development with OpenSpec and OpenCode](https://img.youtube.com/vi/o1w3V3DElV4/maxresdefault.jpg)](https://www.youtube.com/watch?v=o1w3V3DElV4)
 
-[![Spec-Driven Development with OpenSpec and OpenCode](https://img.youtube.com/vi/M3dp9u1wZes/maxresdefault.jpg)](https://www.youtube.com/watch?v=M3dp9u1wZes)
+Read the full walkthrough:
 
-Read the full walkthrough: [SDD with Multi-Model Spec Review and Glossary](https://intent-driven.dev/blog/2026/06/27/sdd-adversarial-authoring-glossary/)
+[Spec-Driven Development with OpenSpec and OpenCode](https://intent-driven.dev/blog/2026/05/10/spec-driven-development-openspec-opencode/)
 
-[![Spec-Driven Development Multi-Model Adversarial Authoring and Glossary with OpenCode and OpenSpec](https://img.youtube.com/vi/2V78VVJ1sa0/maxresdefault.jpg)](https://www.youtube.com/watch?v=2V78VVJ1sa0)
+[SDD with Multi-Model Spec Review and Glossary](https://intent-driven.dev/blog/2026/06/27/sdd-adversarial-authoring-glossary/)
 
 ## How To Use This Template
 
