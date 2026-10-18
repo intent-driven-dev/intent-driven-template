@@ -1,0 +1,129 @@
+/* Collapsible Node Tree CSS */
+
+.collapsible-node-tree {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  line-height: 1.5;
+}
+
+.tree-root {
+  padding-left: 0;
+  margin: 0;
+}
+
+.tree-node {
+  position: relative;
+  margin: 2px 0;
+  padding: 4px 0;
+  border-radius: 3px;
+  transition: background-color 0.2s;
+  min-height: 24px;
+}
+
+.tree-node:hover {
+  background-color: #e0e0e0;
+}
+
+.node-content {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 3px;
+  min-height: 24px;
+}
+
+.toggle-icon {
+  display: inline-block;
+  width: 16px;
+  text-align: center;
+  margin-right: 6px;
+  user-select: none;
+  transition: transform 0.2s ease-in-out;
+  font-size: 12px;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.node-text {
+  flex: 1;
+  padding: 2px 0;
+  font-size: 14px;
+}
+
+.children {
+  list-style: none;
+  padding-left: 20px;
+  margin: 4px 0;
+  transition: all 0.3s ease;
+}
+
+.children.expanded {
+  display: block;
+}
+
+.children.collapsed {
+  display: none;
+}
+
+/* Indentation for nesting levels */
+.tree-node:not(.has-children) {
+  padding-left: 20px;
+}
+
+.tree-node.has-children {
+  padding-left: 0;
+}
+
+.tree-node > .node-content {
+  margin-bottom: 2px;
+}
+
+/* Additional styling for visual hierarchy */
+.tree-node:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.tree-node:nth-child(even) {
+  background-color: #ffffff;
+}
+
+/* Expand/collapse transition effects */
+.toggle-icon {
+  transition: transform 0.2s ease-in-out;
+}
+
+.toggle-icon.expanded {
+  transform: rotate(90deg);
+}
+
+/* Focus outline for accessibility */
+.tree-node:focus-within {
+  outline: 2px solid #007acc;
+  outline-offset: -2px;
+}
+
+/* Adjust nesting indentation for better visual hierarchy */
+.tree-root ul.children {
+  padding-left: 20px;
+}
+
+.tree-root ul.children ul.children {
+  padding-left: 20px;
+}
+
+.tree-root ul.children ul.children ul.children {
+  padding-left: 20px;
+}
+
+/* Styling for expanded nodes */
+.tree-node.expanded > .node-content > .toggle-icon {
+  transform: rotate(90deg);
+}
+
+/* Smooth transitions for expand/collapse animations */
+.children {
+  transition: height 0.3s ease, opacity 0.3s ease;
+}
