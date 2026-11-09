@@ -1,5 +1,13 @@
 # C4 Diagram Templates
 
+## Contents
+
+- [System Context](#system-context)
+- [Container](#container)
+- [Component](#component)
+- [Dynamic](#dynamic)
+- [Deployment](#deployment)
+
 Use these as starting points. Replace generic labels with domain names from the codebase or proposed system.
 
 ## System Context
