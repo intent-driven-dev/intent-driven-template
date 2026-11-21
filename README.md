@@ -1,6 +1,6 @@
 # Intent-Driven Template
 
-An [OpenSpec](https://github.com/Fission-AI/OpenSpec) and [OpenCode](https://opencode.ai/) template with the `proposal -> specs -> design -> adr -> tasks` workflow enabled, plus optional collaboration workflows for teams that choose to adopt them.
+An [OpenSpec](https://github.com/Fission-AI/OpenSpec) template for OpenCode and Codex CLI with the `proposal -> specs -> design -> adr -> tasks` workflow and optional collaboration workflows.
 
 ## Walkthrough
 
@@ -16,12 +16,12 @@ Read the full walkthrough:
 
 ### Start A New Project From This Template
 
-Clone this repository, open it with OpenCode, and start working from the bundled
-OpenSpec configuration, commands, skills, and schema.
+Clone this repository, open it with OpenCode or Codex CLI, and start working from the bundled
+OpenSpec configuration, skills, and schema.
 
 ### Add This Template To An Existing Project
 
-Open your existing project with OpenCode and ask it to install the template:
+Open your existing project with either CLI and ask it to install the template:
 
 ```text
 Read and understand https://raw.githubusercontent.com/intent-driven-dev/intent-driven-template/refs/heads/main/INSTALL_TEMPLATE.md and follow the instructions there.
@@ -36,10 +36,10 @@ Read and understand https://raw.githubusercontent.com/intent-driven-dev/intent-d
   for the full `proposal -> specs -> design -> adr -> tasks` lifecycle.
 - OpenSpec git discipline so proposals land on `main` before apply, and
   implementation lands on `main` before archive.
-- OpenCode skills for repeatable collaboration and implementation workflows,
-  including C4 diagrams, ADR authoring, and OpenSpec lifecycle commands.
+- Shared skills for repeatable collaboration and implementation workflows,
+  including C4 diagrams, ADR authoring, and the OpenSpec lifecycle.
 - A bundled `test-driven-development` skill plus `senior-dev` and `senior-qa`
-  subagents in `.opencode/agent/` for test-first implementation and
+  subagents for test-first implementation and
   acceptance-test work, routed via the `context` block in `openspec/config.yaml`.
 - A `grill-me` style of rigorous design interrogation, inspired by
   https://github.com/mattpocock/skills/blob/main/skills/productivity/grill-me/SKILL.md.
@@ -50,7 +50,7 @@ Read and understand https://raw.githubusercontent.com/intent-driven-dev/intent-d
 The bundled OpenSpec schema is a local copy of the `intent-driven` schema from
 https://github.com/intent-driven-dev/openspec-schemas/tree/main/openspec/schemas/intent-driven.
 
-## Optional: Enable Superpowers
+## Optional: Enable Superpowers in OpenCode
 
 [Superpowers](https://github.com/obra/superpowers) provides guided practices such
 as brainstorming, planning, debugging, verification, worktrees, and
@@ -88,14 +88,18 @@ proposal -> specs -> design -> adr -> tasks
 
 ## Skills
 
-Standard OpenSpec lifecycle skills in `.opencode/skills/` — names are self-explanatory:
-`openspec-new-change`, `openspec-propose`, `openspec-continue-change`, `openspec-explore`,
-`openspec-apply-change`, `openspec-verify-change`, `openspec-sync-specs`, `openspec-archive-change`
+Both CLIs discover the bundled skills in `.agents/skills/`. To invoke a workflow,
+ask the CLI to use the skill by name, for example `Use openspec-propose to plan add-auth`.
+
+The bundled OpenSpec lifecycle skills are `openspec-new-change`, `openspec-propose`,
+`openspec-continue-change`, `openspec-explore`, `openspec-apply-change`,
+`openspec-verify-change`, `openspec-sync-specs`, `openspec-archive-change`, and
+`openspec-bulk-archive-change`.
 
 | Skill | Location | Purpose | Enabled Or Updated By |
 |-------|----------|---------|-----------------------|
-| `openspec-bulk-apply-change` | `.opencode/skills/` | Applies multiple active changes concurrently in isolated worktrees with parallel verification. | Invoke directly with `/opsx:bulk-apply` command when applying multiple active openspec changes. |
-| `adversarial-authoring` | `.opencode/skills/` | Runs author and reviewer agents in sequence to reduce model bias in drafts. | Refer to the skill under rule in the rules section of `openspec/config.yaml`. |
+| `openspec-bulk-apply-change` | `.agents/skills/` | Applies multiple active changes concurrently in isolated worktrees with parallel verification. | Ask either CLI to use the skill for named changes or for all active changes. |
+| `adversarial-authoring` | `.agents/skills/` | Runs author and reviewer agents in sequence to reduce model bias in drafts. | Refer to the skill under rule in the rules section of `openspec/config.yaml`. |
 | `grill-me` | `.agents/skills/` | Interrogates plans and designs with probing questions to surface hidden assumptions. | Refer to this skill under rules section in `openspec/config.yaml`. |
 | `c4-diagrams` | `.agents/skills/` | Visualises system architecture using C4 model levels in ASCII or Mermaid. | Refer to this skill under `design` rule in `openspec/config.yaml`. |
 | `architectural-decision-records` | `.agents/skills/` | Captures architectural decisions with rationale, tradeoffs, and supersession chains. | Automatically invoked or can be explicilty referred to under `adr` rule in `openspec/config.yaml`. |
@@ -104,7 +108,7 @@ Standard OpenSpec lifecycle skills in `.opencode/skills/` — names are self-exp
 | `openspec-git-discipline` | `.agents/skills/` | Enforces that proposals reach `main` before apply, and implementation merges before archive. | Enabled through `AGENTS.md`. |
 | `spec-as-source` | `.agents/skills/` | Adds executable acceptance specifications to the intent-driven workflow. | Explicitly opt in by uncommenting both the `specs` and `tasks` rules in `openspec/config.yaml`. |
 | `acceptance-test-authoring` | `.agents/skills/` | Configures the acceptance runner, extraction, linting, and step definitions for `spec-as-source`. | Required by `spec-as-source` when configuring or changing acceptance-test infrastructure. |
-| `test-driven-development` | `.agents/skills/` | Guides strict red-green-refactor TDD: one behaviour per test, minimal implementation to pass, refactoring on green, with best-practice patterns and collaborator mocking guidance. | Loaded by the `senior-dev` agent in `.opencode/agent/senior-dev.md`; enable by uncommenting the `context` lines in `openspec/config.yaml` that route src work to `senior-dev`. |
+| `test-driven-development` | `.agents/skills/` | Guides strict red-green-refactor TDD: one behaviour per test, minimal implementation to pass, refactoring on green, with best-practice patterns and collaborator mocking guidance. | Loaded by `senior-dev`; enable routing by uncommenting the `context` lines in `openspec/config.yaml`. |
 
 Example configurations are available in `openspec/config.yaml` and `AGENTS.md`. You can comment/uncomment the skill references to enable them.
 
@@ -127,7 +131,23 @@ During `specs`, `spec-as-source` requires `gherkin-authoring` to author the fenc
 
 ## Agents
 
-Specialist agents used within skills, in `.opencode/agent/`:
+The shared definitions in `.agents/agents/` start with a description followed by
+a blank line and the agent's instructions. Ready-to-load files are checked in
+directly under `.opencode/agents/` and `.codex/agents/`.
+
+To choose a model or effort for a role, add an entry keyed by the agent name in
+the corresponding `agent-models.json` file. In `.opencode/agent-models.json`,
+use `model` (`provider/model`) and set `variant` to a variant the model supports.
+In `.codex/agent-models.json`, use `model` and `model_reasoning_effort`. Omitted
+settings use the CLI's defaults. To give the adversarial author and reviewer
+different models, configure each role in the CLI you use.
+
+After editing shared definitions or model settings, refresh both sets of files
+from the repository root:
+
+```bash
+node .agents/agents/render.mjs
+```
 
 | Agent | Purpose |
 |-------|---------|

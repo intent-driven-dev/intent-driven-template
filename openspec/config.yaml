@@ -18,8 +18,7 @@ rules:
     # - Must use glossary skill
   adr:
     - Must use architectural-decision-records skill
-  specs:
-    # - Must use spec-as-source skill
+  specs: # - Must use spec-as-source skill
   tasks:
     # - Must use spec-as-source skill
 
@@ -30,3 +29,4 @@ operations:
   archive:
     guidance:
       - Must run OpenSpec Sync before archiving
+skillsScope: project

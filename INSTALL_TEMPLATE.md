@@ -1,11 +1,11 @@
 # Install Intent-Driven Template
 
-This file is for OpenCode. Follow these instructions when a user asks you to add
+Follow these instructions in OpenCode or Codex CLI when a user asks you to add
 this template to an existing project.
 
 ## Goal
 
-Install the intent-driven OpenSpec and OpenCode template files into the user's
+Install the intent-driven OpenSpec template files into the user's
 current project without overwriting project-specific work blindly.
 
 This first-time install guide does not cover upgrade/version tracking. Handle
@@ -27,8 +27,8 @@ branch and status.
 Before copying files, inspect the target project:
 
 - Check `README.md`, `AGENTS.md`, `opencode.json`, `openspec/`, `.opencode/`,
-  and `.agents/` if they exist.
-- Identify existing OpenSpec, OpenCode, agent, or skill configuration.
+  `.codex/`, and `.agents/` if they exist.
+- Identify existing OpenSpec, agent, or skill configuration for either CLI.
 - Preserve user-specific instructions and project conventions.
 - Do not delete or replace existing files without explaining the conflict and
   getting user approval.
@@ -39,8 +39,10 @@ Copy these template files and directories into the target project when they do
 not already exist:
 
 - `openspec/`
-- `.opencode/`
-- `.agents/`
+- `.agents/skills/` for shared skills that both CLIs discover automatically
+- `.agents/agents/` for shared agent definitions and their renderer
+- `.opencode/agents/` and `.opencode/agent-models.json` for OpenCode
+- `.codex/agents/` and `.codex/agent-models.json` for Codex CLI
 - `opencode.json`
 
 Merge these files when they already exist:
@@ -55,12 +57,18 @@ Merge these files when they already exist:
 3. Copy missing template directories and files into the target project.
 4. Merge `AGENTS.md` by adding the OpenSpec git-discipline instruction without
    removing existing user instructions.
-5. If `opencode.json`, `openspec/`, `.opencode/`, or `.agents/` already exist,
+5. If `opencode.json`, `openspec/`, `.opencode/`, `.codex/`, or `.agents/` already exist,
    compare the template version with the target version and ask the user before
-   replacing or restructuring anything.
+   replacing or restructuring anything. Check `.opencode/agent/` for older
+   definitions with the same agent names before installing the new ones.
 6. Keep the target project's product code, package files, application docs, and
    existing tests unchanged unless the user explicitly asks for changes.
-7. Verify the resulting file tree and summarize exactly what changed.
+7. Verify the resulting file tree and summarize exactly what changed. To start
+   a workflow, ask either CLI to use a skill by name, such as `openspec-propose`.
+
+The native agent files are ready to use after copying. To customize a role, edit
+its Markdown source in `.agents/agents/` or its CLI's `agent-models.json`, then
+run `node .agents/agents/render.mjs` from the project root.
 
 ## Validation
 
@@ -76,5 +84,5 @@ If OpenSpec is available, also run:
 openspec schema validate intent-driven
 ```
 
-If OpenCode or OpenSpec commands are unavailable, report that clearly and leave
+If the selected CLI or OpenSpec is unavailable, report that clearly and leave
 the installed files in place for the user to verify later.
