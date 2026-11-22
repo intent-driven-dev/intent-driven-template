@@ -2,7 +2,7 @@
 description: "Authors artifacts for adversarial-authoring."
 mode: subagent
 permission:
-  edit: allow
+  edit: deny
   bash: deny
 ---
 

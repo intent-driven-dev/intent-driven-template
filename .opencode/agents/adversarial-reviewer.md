@@ -2,7 +2,7 @@
 description: "Reviews adversarial-authoring drafts."
 mode: subagent
 permission:
-  edit: allow
+  edit: deny
   bash: deny
 ---
 
