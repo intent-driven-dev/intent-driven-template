@@ -31,6 +31,9 @@ pnpm-debug.log*
 # OpenCode local dependencies
 .opencode/node_modules/
 
+# Claude Code local settings
+.claude/settings.local.json
+
 # OpenSpec local output
 openspec/.cache/
 

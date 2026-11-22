@@ -1,6 +1,6 @@
 # Intent-Driven Template
 
-An [OpenSpec](https://github.com/Fission-AI/OpenSpec) template for Intent-Driven Development using OpenCode, Codex CLI, and GitHub Copilot CLI with the `proposal -> specs -> design -> adr -> tasks` workflow and optional collaboration workflows.
+An [OpenSpec](https://github.com/Fission-AI/OpenSpec) template for Intent-Driven Development using OpenCode, Codex CLI, GitHub Copilot CLI, and Claude Code with the `proposal -> specs -> design -> adr -> tasks` workflow and optional collaboration workflows.
 
 ## Walkthrough
 
@@ -16,7 +16,7 @@ Read the full walkthrough:
 
 ### Start A New Project From This Template
 
-Clone this repository, open it with OpenCode, Codex CLI, or GitHub Copilot CLI, and start working
+Clone this repository, open it with OpenCode, Codex CLI, GitHub Copilot CLI, or Claude Code, and start working
 from the bundled OpenSpec configuration, skills, and schema.
 
 ### Add This Template To An Existing Project
@@ -70,7 +70,9 @@ proposal -> specs -> design -> adr -> tasks
 
 ## Skills
 
-OpenCode, Codex CLI, and Copilot CLI discover the bundled skills in `.agents/skills/`. To invoke a
+OpenCode, Codex CLI, and Copilot CLI discover the bundled skills in `.agents/skills/`. Claude Code
+discovers them through the symlinks in `.claude/skills/`, which point back to `.agents/skills/`;
+add a symlink there when you add a new skill. To invoke a
 workflow, ask the CLI to use the skill by name, for example `Use openspec-propose to plan add-auth`.
 
 The bundled OpenSpec lifecycle skills are `openspec-new-change`, `openspec-propose`,
@@ -94,7 +96,8 @@ The bundled OpenSpec lifecycle skills are `openspec-new-change`, `openspec-propo
 
 Example configurations are available in `openspec/config.yaml` and `AGENTS.md`. You can comment/uncomment the skill references to enable them.
 
-OpenCode V2's native subagents power `openspec-bulk-apply-change` without extra plugins.
+OpenCode V2's native subagents power `openspec-bulk-apply-change` without extra plugins. Claude Code
+subagents cannot launch other subagents, so run the specialist roles from the main session there.
 
 ## Experimental: Spec As Source
 
@@ -154,6 +157,20 @@ Add these lines above `[features]` in `.codex/agents/adversarial-reviewer.toml`.
 model = "gpt-6-astra"
 model_reasoning_effort = "high"
 ```
+
+### Claude Code
+
+Subagents live in `.claude/agents/<role>.md` and point to the shared instructions in
+`.agents/agents/<role>.md`. The adversarial author is limited to `Read, Grep, Glob` and the
+reviewer to `Read`; `senior-dev` and `senior-qa` inherit all tools. Claude Code
+(v2.1.277 or later) reads `AGENTS.md` directly, so the repository guidance applies without a
+`CLAUDE.md`. If you add a `CLAUDE.md`, Claude reads only that file, so start it with `@AGENTS.md`.
+Claude Code subagents cannot launch other subagents, so delegate to them from the main session.
+
+Subagents inherit the parent session's model by default. For cross-model review, add a `model`
+line (`sonnet`, `opus`, `haiku`, a full model ID, or `inherit`) to the frontmatter of
+`.claude/agents/adversarial-author.md` and `.claude/agents/adversarial-reviewer.md`, using
+different values for each.
 
 ### GitHub Copilot CLI
 
