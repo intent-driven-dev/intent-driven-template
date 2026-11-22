@@ -17,7 +17,7 @@ rules:
     - Must use c4-diagrams skill
     # - Must use glossary skill
   adr:
-    - Must use architectural-decision-records skill
+    # - Ask me which decisions to record
   specs: # - Must use spec-as-source skill
   tasks:
     # - Must use spec-as-source skill

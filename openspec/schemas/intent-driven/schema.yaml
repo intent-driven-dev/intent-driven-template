@@ -170,6 +170,8 @@ artifacts:
       ADR needs to be revisited, do not propose modifying it; flag it under
       Open Questions and let the adr step record a new superseding ADR.
 
+      Use the architectural-decision-records skill to read existing ADRs.
+
 
       Sections:
 
@@ -251,6 +253,13 @@ artifacts:
       "accepted, supersedes ADR-NNNN", populate the `Supersedes:` field, and
       explain in Context why the prior decision is being revisited. Do NOT
       touch the prior ADR's file.
+
+      Write each new ADR with the architectural-decision-records skill. Set
+      Status to "proposed" (or "proposed, supersedes ADR-NNNN") when first
+      written. Ask the user to confirm, and only then change Status to
+      "accepted" (or "accepted, supersedes ADR-NNNN"). Where the skill
+      disagrees with this schema (filename, Supersedes field, never editing a
+      prior accepted ADR), follow the schema.
 
       4. Write openspec/changes/<change>/adr.md using the template. The
       manifest MUST state that ADR review completed for this change, list the

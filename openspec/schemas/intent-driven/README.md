@@ -83,6 +83,12 @@ change folder. Accepted ADRs are immutable. If a future decision changes a
 prior ADR, create a new ADR that supersedes the old one and leave the original
 file unchanged.
 
+The `design` step uses the `architectural-decision-records` skill to read
+existing ADRs, and the `adr` step uses it to write new ones. New ADRs start as
+`proposed` and become `accepted` only after you confirm. Where the skill and
+this schema disagree, the schema wins. To be asked which decisions to record,
+uncomment the `adr` rule in `openspec/config.yaml`.
+
 ## Validate
 
 ```bash
