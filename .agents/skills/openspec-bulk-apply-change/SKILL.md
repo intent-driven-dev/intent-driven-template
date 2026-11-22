@@ -59,6 +59,16 @@ Use this skill for requests to apply multiple OpenSpec changes in parallel. The 
    - Note the implementation scope needed by the delegated apply flow.
    - Exclude blocked or all-done changes from execution and include them in the final report.
 
+   **Check worker routing before creating worktrees:**
+
+   - Read applicable project instructions and the apply/verify skills to determine whether each worker may implement and verify the change itself or must delegate to roles such as `senior-dev` and `senior-qa`.
+   - When no further delegation is required, default to the built-in `general` worker to implement and verify its assigned change itself. Do not invent specialist routing where the project does not require it.
+   - When project instructions require nested delegation, select an already configured custom worker capable of launching the required specialists, rather than `general`. Verify that the parent can launch that worker and that the worker can launch the required roles. Do not silently replace required specialists with self-implementation or self-verification.
+   - **OpenCode V2-specific:** The built-in `general` subagent cannot launch children. The default `experimental.subagent_depth` is `1`; a direct parent → worker → specialist flow needs at least `2` (and more if the current session is already nested or further levels are required). Depth alone is insufficient: the relevant agents' `subagent` permissions must also permit each required child. Use native subagents, not plugins.
+   - **Codex and other harnesses:** Use their native subagents and check their own delegation capabilities, nesting limits, and permissions; OpenCode configuration keys and built-in restrictions are not portable settings.
+   - If a required worker, nesting depth, or permission is missing or cannot be confirmed, pause the affected change before dispatch. Report the required roles, the missing capability, and the action needed: ask the user to identify an existing delegation-capable worker, enable sufficient depth, or permit the specific parent/worker child launches, as applicable. Resume only after those prerequisites are confirmed. Do not add a dedicated worker or change global configuration by default, and do not bypass project routing as a fallback.
+   - Include routing pauses in the final report. If fewer than 2 executable candidates remain, stop rather than dispatching a single-change bulk flow.
+
 4. **Create isolated worktrees**
 
    For each executable candidate change:
@@ -71,7 +81,7 @@ Use this skill for requests to apply multiple OpenSpec changes in parallel. The 
 
    For each executable candidate change:
 
-   - Dispatch one subagent per change. Set its working directory to the assigned worktree when the CLI supports it. Otherwise pass the absolute worktree path and direct the subagent to use it for all file and command operations.
+   - Dispatch one subagent per change using the worker selected by the routing check. Set its working directory to the assigned worktree when the CLI supports it. Otherwise pass the absolute worktree path and direct the subagent to use it for all file and command operations.
    - Run all delegated apply flows in parallel.
    - Do not apply any change directly in the parent agent.
 
@@ -81,6 +91,7 @@ Use this skill for requests to apply multiple OpenSpec changes in parallel. The 
    - Use `openspec-git-discipline` before applying.
    - Load and follow `openspec-apply-change` for the assigned change.
    - Load and follow `openspec-verify-change` for that change after apply work is complete.
+   - Follow applicable project role routing: implement and verify directly only when further delegation is not required; otherwise use the required specialists through the confirmed native delegation path. If a required child launch is unavailable, pause and report the blocker instead of bypassing it.
    - Stop after verification.
    - Do not merge, archive, or commit unless explicitly instructed by the parent prompt.
    - Return implementation outcome, verification status, changed files, blockers, and unresolved warnings.
