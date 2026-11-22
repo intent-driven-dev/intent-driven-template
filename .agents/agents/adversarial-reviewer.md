@@ -31,4 +31,4 @@ Return only:
 - <Risk or uncertainty the primary agent should preserve or ask about>
 ```
 
-Do not edit files. Do not run tools. Do not include hidden reasoning or raw chain-of-thought.
+Initial loading of these role instructions is permitted. After loading, use only the task context supplied by the parent agent; do not run additional tools or edit files. If required context is missing, report it to the parent before proceeding rather than researching independently. Do not include hidden reasoning or raw chain-of-thought.
