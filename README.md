@@ -14,8 +14,8 @@ Read the full walkthrough:
 
 ## Requirements
 
-- OpenSpec 2.x
-- OpenCode 2.x, Codex CLI, GitHub Copilot CLI, or Claude Code (any one is enough)
+- OpenSpec 2.0 or later
+- OpenCode 2.0 or later, Codex CLI, GitHub Copilot CLI, or Claude Code (any one is enough)
 
 ## How To Use This Template
 

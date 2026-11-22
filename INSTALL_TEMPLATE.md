@@ -13,7 +13,7 @@ upgrade instructions in a separate change.
 
 ## Requirements
 
-This template requires OpenSpec 2.x. If the user runs OpenCode, it must be OpenCode 2.x.
+This template requires OpenSpec 2.0 or later. If the user runs OpenCode, it must be OpenCode 2.0 or later.
 Check the installed versions and tell the user if they are older.
 
 ## Source Template
