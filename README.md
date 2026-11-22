@@ -120,22 +120,39 @@ Edit role instructions in `.agents/agents/`. Each OpenCode role in
 the parent reads the shared file and passes its instructions to the role when
 delegating, as directed by `AGENTS.md`.
 
-Set `model` to `provider/model` with an optional `#variant` suffix
-(`provider/model#variant`) in the frontmatter of `.opencode/agents/<role>.md`;
-do not use a separate `variant` frontmatter field. In Codex CLI, set `model` and
-`model_reasoning_effort` in `.codex/agents/<role>.toml`.
-Omitted settings use the CLI's defaults.
-
-In OpenCode, the adversarial author and reviewer inherit the parent session's
-model by default and are usable without overrides. Independent review using the
-same model is not cross-model review. For genuinely different models, optionally
-set distinct `model` values in `.opencode/agents/adversarial-author.md` and
-`.opencode/agents/adversarial-reviewer.md`, or in the corresponding
-`.codex/agents/<role>.toml` files for Codex CLI.
-
 | Agent | Purpose |
 |-------|---------|
 | `adversarial-author` | Writes an initial draft of a specification artifact or design document. |
 | `adversarial-reviewer` | Reviews the author's draft with challenges and improvement suggestions. |
 | `senior-dev` | Implements src work test-first through strict red-green-refactor, following the `test-driven-development` skill. |
 | `senior-qa` | Authors acceptance tests, step definitions, and runner configuration, following the `acceptance-test-authoring` skill. |
+
+### OpenCode
+
+Set `model` in the frontmatter of `.opencode/agents/<role>.md` using
+`provider/model` or `provider/model#variant`. The adversarial author and reviewer
+inherit the parent session's model by default. For cross-model review, set
+different `model` values in `.opencode/agents/adversarial-author.md` and
+`.opencode/agents/adversarial-reviewer.md`.
+
+### Codex CLI
+
+Set `model` and optionally `model_reasoning_effort` at the top level of
+`.codex/agents/<role>.toml`, before any table such as `[features]`. By default,
+subagents inherit the parent agent's model and reasoning effort. Use distinct
+`model` values for cross-model review and choose models and reasoning levels
+available in your Codex CLI. See the [Codex subagent model documentation](https://learn.chatgpt.com/docs/agent-configuration/subagents#model-choice).
+
+Add these lines above `[features]` in `.codex/agents/adversarial-author.toml`.
+
+```toml
+model = "gpt-6.1-sol"
+model_reasoning_effort = "medium"
+```
+
+Add these lines above `[features]` in `.codex/agents/adversarial-reviewer.toml`.
+
+```toml
+model = "gpt-6-astra"
+model_reasoning_effort = "high"
+```
