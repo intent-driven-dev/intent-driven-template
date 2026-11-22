@@ -109,13 +109,18 @@ The bundled OpenSpec lifecycle skills are `openspec-new-change`, `openspec-propo
 | `c4-diagrams` | `.agents/skills/` | Visualises system architecture using C4 model levels in ASCII or Mermaid. | Refer to this skill under `design` rule in `openspec/config.yaml`. |
 | `architectural-decision-records` | `.agents/skills/` | Captures architectural decisions with rationale, tradeoffs, and supersession chains. | Used automatically by the schema: `design` uses it to read existing ADRs from earlier changes, and `adr` uses it to write new ones (as `proposed` until you accept them). Uncomment the `adr` rule in `openspec/config.yaml` to be asked which decisions to record. |
 | `gherkin-authoring` | `.agents/skills/` | Drafts and improves Gherkin scenarios for observable, domain-language behaviour. | Required by `spec-as-source` during the `specs` phase. |
-| `glossary` | `.agents/skills/` | Maintains business and technical terminology and companion glossary references for specification artifacts. | Can be referred to under `proposal` and/or `design` rule in `openspec/config.yaml`. |
+| `glossary` | `.agents/skills/` | Maintains business and technical terminology and companion glossary references for artifacts. | Request it by name or enable it for an artifact in `openspec/config.yaml`. |
 | `openspec-git-discipline` | `.agents/skills/` | Enforces that proposals reach `main` before apply, and implementation merges before archive. | Enabled through `AGENTS.md`. |
 | `spec-as-source` | `.agents/skills/` | Adds executable acceptance specifications to the intent-driven workflow. | Explicitly opt in by uncommenting both the `specs` and `tasks` rules in `openspec/config.yaml`. |
 | `acceptance-test-authoring` | `.agents/skills/` | Configures the acceptance runner, extraction, linting, and step definitions for `spec-as-source`. | Required by `spec-as-source` when configuring or changing acceptance-test infrastructure. |
 | `test-driven-development` | `.agents/skills/` | Guides strict red-green-refactor TDD: one behaviour per test, minimal implementation to pass, refactoring on green, with best-practice patterns and collaborator mocking guidance. | Loaded by `senior-dev`; enable routing by uncommenting the `context` lines in `openspec/config.yaml`. |
 
 Example configurations are available in `openspec/config.yaml` and `AGENTS.md`. You can comment/uncomment the skill references to enable them.
+
+The glossary skill is opt-in. For OpenSpec, uncomment `Must use glossary skill`
+under `rules.proposal` or `rules.design` in `openspec/config.yaml`, or add the
+same rule under another artifact ID such as `rules.specs`. Each rule applies to
+its own artifact type.
 
 OpenCode V2's native subagents power `openspec-bulk-apply-change` without extra plugins. Claude Code
 subagents cannot launch other subagents, so run the specialist roles from the main session there.

@@ -1,9 +1,14 @@
 ---
 name: glossary
-description: Use when authoring or reviewing specs, requirements, design docs, ADRs, tasks, glossary entries, domain terms, technical terms, or wording consistency across artifacts
+description: Maintain project terminology and companion references when explicitly asked to use the glossary skill.
 ---
 
 # Glossary
+
+Apply this workflow only when a direct request or an applicable workflow rule
+explicitly asks to use the `glossary` skill by name. Apply it only to the requested
+artifact or artifacts. Routine drafting, editing, reviewing, and passing mentions
+of a glossary do not activate the skill.
 
 Use existing repository terms before creating new ones.
 

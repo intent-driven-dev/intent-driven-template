@@ -28,9 +28,9 @@ words and one-off implementation details.
 
 ## Companion Reference Files
 
-When an artifact uses glossary terms, it gets a companion reference file in the
-same directory. Remove `.md` from the artifact name and append
-`-glossary-reference.md`.
+When the skill is used to author or edit an artifact, the artifact gets a
+companion reference file in the same directory. Replace `.md` in the filename
+with `-glossary-reference.md`.
 
 | Artifact | Companion reference |
 | --- | --- |
@@ -70,19 +70,7 @@ During checkout, the **Account** owner can update the subscription plan.
 Do not bold terms in code blocks, frontmatter, links, or places where Markdown
 formatting would reduce readability.
 
-## Framework Usage
+## Usage
 
-The glossary skill is framework-agnostic. It can be used with any documentation,
-specification, planning, or requirements workflow where terminology consistency
-matters.
-
-For OpenSpec projects, require it from `openspec/config.yaml`:
-
-```yaml
-rules:
-  proposal:
-    - Must use glossary skill
-```
-
-You can also require it for other OpenSpec stages, such as `design`, or
-`spec`, when those artifacts should be checked against the glossary.
+Ask to use the `glossary` skill by name for the artifacts you want it to cover.
+A workflow rule can request the skill by name for a specific artifact type.
