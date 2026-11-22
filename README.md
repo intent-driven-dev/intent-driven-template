@@ -138,9 +138,14 @@ delegating, as directed by `AGENTS.md`.
 
 Set `model` (`provider/model`) and `variant` in the frontmatter of
 `.opencode/agents/<role>.md`, or set `model` and `model_reasoning_effort` in
-`.codex/agents/<role>.toml`. Omitted settings use the CLI's defaults. To
-give the adversarial author and reviewer different models, configure both roles
-in the CLI you use.
+`.codex/agents/<role>.toml`. Omitted settings use the CLI's defaults.
+
+In OpenCode, the adversarial author and reviewer inherit the parent session's
+model by default and are usable without overrides. Independent review using the
+same model is not cross-model review. For genuinely different models, optionally
+set distinct `model` values in `.opencode/agents/adversarial-author.md` and
+`.opencode/agents/adversarial-reviewer.md`, or in the corresponding
+`.codex/agents/<role>.toml` files for Codex CLI.
 
 | Agent | Purpose |
 |-------|---------|
