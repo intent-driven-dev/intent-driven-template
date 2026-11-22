@@ -16,8 +16,7 @@ rules:
   design:
     - Must use c4-diagrams skill
     # - Must use glossary skill
-  adr:
-    # - Ask me which decisions to record
+  adr: # - Ask me which decisions to record
   specs: # - Must use spec-as-source skill
   tasks:
     # - Must use spec-as-source skill
@@ -30,3 +29,5 @@ operations:
     guidance:
       - Must run OpenSpec Sync before archiving
 skillsScope: project
+githubCopilot:
+  cloudAgent: false

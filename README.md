@@ -190,3 +190,9 @@ skills in `.agents/skills/` and repository guidance in `AGENTS.md`.
 These are Copilot's repository-level custom-agent profiles, so other compatible
 Copilot surfaces may also discover them; this template documents their use from
 Copilot CLI.
+
+Repository model and reasoning-effort settings belong in
+`.github/copilot/settings.json`; local overrides belong in
+`.github/copilot/settings.local.json`. Use `/model` for session or repository
+model defaults and `/subagents` for per-subagent model and effort settings.
+There is no separate `.copilot/` repository configuration folder.
