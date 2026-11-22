@@ -1,4 +1,5 @@
 schema: intent-driven
+stack: javascript
 
 context: |
   PollCast is an intuitive web application allowing users to instantly create,
