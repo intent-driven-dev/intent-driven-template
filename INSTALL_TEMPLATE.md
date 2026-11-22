@@ -40,9 +40,9 @@ not already exist:
 
 - `openspec/`
 - `.agents/skills/` for shared skills that both CLIs discover automatically
-- `.agents/agents/` for shared agent definitions and their renderer
-- `.opencode/agents/` and `.opencode/agent-models.json` for OpenCode
-- `.codex/agents/` and `.codex/agent-models.json` for Codex CLI
+- `.agents/agents/` for shared agent instructions
+- `.opencode/agents/` for OpenCode role definitions that point to the shared instructions
+- `.codex/agents/` for Codex CLI role registrations
 - `opencode.json`
 
 Merge these files when they already exist:
@@ -55,20 +55,21 @@ Merge these files when they already exist:
 1. Clone or locate the source template repository.
 2. Inspect the target project for existing configuration and documentation.
 3. Copy missing template directories and files into the target project.
-4. Merge `AGENTS.md` by adding the OpenSpec git-discipline instruction without
-   removing existing user instructions.
+4. Merge the OpenSpec git-discipline and Codex delegation instructions from
+   `AGENTS.md`, preserving existing user instructions.
 5. If `opencode.json`, `openspec/`, `.opencode/`, `.codex/`, or `.agents/` already exist,
    compare the template version with the target version and ask the user before
-   replacing or restructuring anything. Check `.opencode/agent/` for older
-   definitions with the same agent names before installing the new ones.
+   replacing or restructuring anything. Check `.opencode/agent/` and the
+   project's OpenCode JSON configuration for existing definitions with the same
+   names before copying the new role files.
 6. Keep the target project's product code, package files, application docs, and
    existing tests unchanged unless the user explicitly asks for changes.
 7. Verify the resulting file tree and summarize exactly what changed. To start
    a workflow, ask either CLI to use a skill by name, such as `openspec-propose`.
 
-The native agent files are ready to use after copying. To customize a role, edit
-its Markdown source in `.agents/agents/` or its CLI's `agent-models.json`, then
-run `node .agents/agents/render.mjs` from the project root.
+Edit shared role instructions in `.agents/agents/`. Set model and effort
+overrides in the corresponding role file under `.opencode/agents/` or
+`.codex/agents/`.
 
 ## Validation
 

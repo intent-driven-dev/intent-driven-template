@@ -131,23 +131,16 @@ During `specs`, `spec-as-source` requires `gherkin-authoring` to author the fenc
 
 ## Agents
 
-The shared definitions in `.agents/agents/` start with a description followed by
-a blank line and the agent's instructions. Ready-to-load files are checked in
-directly under `.opencode/agents/` and `.codex/agents/`.
+Edit role instructions in `.agents/agents/`. Each OpenCode role in
+`.opencode/agents/` reads its shared file before starting a task. In Codex CLI,
+the parent reads the shared file and passes its instructions to the role when
+delegating, as directed by `AGENTS.md`.
 
-To choose a model or effort for a role, add an entry keyed by the agent name in
-the corresponding `agent-models.json` file. In `.opencode/agent-models.json`,
-use `model` (`provider/model`) and set `variant` to a variant the model supports.
-In `.codex/agent-models.json`, use `model` and `model_reasoning_effort`. Omitted
-settings use the CLI's defaults. To give the adversarial author and reviewer
-different models, configure each role in the CLI you use.
-
-After editing shared definitions or model settings, refresh both sets of files
-from the repository root:
-
-```bash
-node .agents/agents/render.mjs
-```
+Set `model` (`provider/model`) and `variant` in the frontmatter of
+`.opencode/agents/<role>.md`, or set `model` and `model_reasoning_effort` in
+`.codex/agents/<role>.toml`. Omitted settings use the CLI's defaults. To
+give the adversarial author and reviewer different models, configure both roles
+in the CLI you use.
 
 | Agent | Purpose |
 |-------|---------|

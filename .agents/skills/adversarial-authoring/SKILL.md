@@ -37,8 +37,6 @@ Use these named subagents:
 - `adversarial-author`: authors the initial draft.
 - `adversarial-reviewer`: reviews and challenges the draft.
 
-Model and effort overrides for these roles are configured in the active CLI's `agent-models.json`.
-
 Do not substitute other agents unless the user explicitly requests it.
 
 ## Council Notes
