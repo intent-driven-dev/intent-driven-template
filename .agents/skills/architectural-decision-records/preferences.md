@@ -1,6 +1,6 @@
 # ADR Preferences
 
-preferred-style: unset
+preferred-style: madr-minimal
 
 When `preferred-style` is `unset`, ask the user which ADR style they prefer before drafting an ADR, then update this file with one of:
 
