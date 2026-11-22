@@ -1,6 +1,6 @@
 # Intent-Driven Template
 
-An [OpenSpec](https://github.com/Fission-AI/OpenSpec) template for OpenCode and Codex CLI with the `proposal -> specs -> design -> adr -> tasks` workflow and optional collaboration workflows.
+An [OpenSpec](https://github.com/Fission-AI/OpenSpec) template for Intent-Driven Development using OpenCode, Codex CLI, and GitHub Copilot CLI with the `proposal -> specs -> design -> adr -> tasks` workflow and optional collaboration workflows.
 
 ## Walkthrough
 
@@ -16,12 +16,12 @@ Read the full walkthrough:
 
 ### Start A New Project From This Template
 
-Clone this repository, open it with OpenCode or Codex CLI, and start working from the bundled
-OpenSpec configuration, skills, and schema.
+Clone this repository, open it with OpenCode, Codex CLI, or GitHub Copilot CLI, and start working
+from the bundled OpenSpec configuration, skills, and schema.
 
 ### Add This Template To An Existing Project
 
-Open your existing project with either CLI and ask it to install the template:
+Open your existing project with any of the supported CLIs and ask it to install the template:
 
 ```text
 Read and understand https://raw.githubusercontent.com/intent-driven-dev/intent-driven-template/refs/heads/main/INSTALL_TEMPLATE.md and follow the instructions there.
@@ -70,8 +70,8 @@ proposal -> specs -> design -> adr -> tasks
 
 ## Skills
 
-Both CLIs discover the bundled skills in `.agents/skills/`. To invoke a workflow,
-ask the CLI to use the skill by name, for example `Use openspec-propose to plan add-auth`.
+OpenCode, Codex CLI, and Copilot CLI discover the bundled skills in `.agents/skills/`. To invoke a
+workflow, ask the CLI to use the skill by name, for example `Use openspec-propose to plan add-auth`.
 
 The bundled OpenSpec lifecycle skills are `openspec-new-change`, `openspec-propose`,
 `openspec-continue-change`, `openspec-explore`, `openspec-apply-change`,
@@ -115,10 +115,8 @@ During `specs`, `spec-as-source` requires `gherkin-authoring` to author the fenc
 
 ## Agents
 
-Edit role instructions in `.agents/agents/`. Each OpenCode role in
-`.opencode/agents/` reads its shared file before starting a task. In Codex CLI,
-the parent reads the shared file and passes its instructions to the role when
-delegating, as directed by `AGENTS.md`.
+Edit shared role instructions in `.agents/agents/`. Each platform-specific agent
+definition loads the corresponding shared file before starting a task.
 
 | Agent | Purpose |
 |-------|---------|
@@ -156,3 +154,17 @@ Add these lines above `[features]` in `.codex/agents/adversarial-reviewer.toml`.
 model = "gpt-6-astra"
 model_reasoning_effort = "high"
 ```
+
+### GitHub Copilot CLI
+
+Repository custom agents live in `.github/agents/<role>.agent.md`. The four
+profiles in that directory point to the shared instructions in
+`.agents/agents/<role>.md`; the adversarial author and reviewer profiles are
+read-only, while the development and QA profiles retain the tools needed for
+their work. Select a profile with `/agent` in an interactive session or start a
+session with `copilot --agent <role>`. Copilot CLI already discovers the shared
+skills in `.agents/skills/` and repository guidance in `AGENTS.md`.
+
+These are Copilot's repository-level custom-agent profiles, so other compatible
+Copilot surfaces may also discover them; this template documents their use from
+Copilot CLI.
