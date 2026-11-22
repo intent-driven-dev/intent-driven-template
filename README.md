@@ -50,24 +50,6 @@ Read and understand https://raw.githubusercontent.com/intent-driven-dev/intent-d
 The bundled OpenSpec schema is a local copy of the `intent-driven` schema from
 https://github.com/intent-driven-dev/openspec-schemas/tree/main/openspec/schemas/intent-driven.
 
-## Optional: Enable Superpowers in OpenCode
-
-[Superpowers](https://github.com/obra/superpowers) provides guided practices such
-as brainstorming, planning, debugging, verification, worktrees, and
-subagent-driven parallel work. It is not enabled by default in this template.
-
-To enable it, add the plugin entry to `opencode.json`:
-
-```json
-{
-  "$schema": "https://opencode.ai/config.json",
-  "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"]
-}
-```
-
-If your configuration already has a `plugin` array, append the entry while
-preserving your existing plugins and other settings. Restart OpenCode to load it.
-
 ## Workflow
 
 The intent-driven workflow moves through these artifacts in order:
@@ -112,6 +94,8 @@ The bundled OpenSpec lifecycle skills are `openspec-new-change`, `openspec-propo
 
 Example configurations are available in `openspec/config.yaml` and `AGENTS.md`. You can comment/uncomment the skill references to enable them.
 
+OpenCode V2's native subagents power `openspec-bulk-apply-change` without extra plugins.
+
 ## Experimental: Spec As Source
 
 The `spec-as-source` skill is an opt-in layer on the intent-driven schema that uses fenced Gherkin in OpenSpec specifications as the source for generating acceptance tests. To enable `spec-as-source` capability add the skill reference under both the `specs` and `tasks` rules in `openspec/config.yaml`.
@@ -136,9 +120,11 @@ Edit role instructions in `.agents/agents/`. Each OpenCode role in
 the parent reads the shared file and passes its instructions to the role when
 delegating, as directed by `AGENTS.md`.
 
-Set `model` (`provider/model`) and `variant` in the frontmatter of
-`.opencode/agents/<role>.md`, or set `model` and `model_reasoning_effort` in
-`.codex/agents/<role>.toml`. Omitted settings use the CLI's defaults.
+Set `model` to `provider/model` with an optional `#variant` suffix
+(`provider/model#variant`) in the frontmatter of `.opencode/agents/<role>.md`;
+do not use a separate `variant` frontmatter field. In Codex CLI, set `model` and
+`model_reasoning_effort` in `.codex/agents/<role>.toml`.
+Omitted settings use the CLI's defaults.
 
 In OpenCode, the adversarial author and reviewer inherit the parent session's
 model by default and are usable without overrides. Independent review using the
