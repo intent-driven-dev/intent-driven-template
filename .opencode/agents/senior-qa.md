@@ -1,9 +1,13 @@
 ---
 description: "Senior QA engineer for acceptance tests. Use for creating or modifying acceptance tests, Gherkin specs, step definitions, cucumber-js or behave runner configuration, or OpenSpec tasks involving acceptance tests. Follows the acceptance-test-authoring skill."
 mode: subagent
-permission:
-  edit: allow
-  bash: allow
+permissions:
+  - action: edit
+    resource: '*'
+    effect: allow
+  - action: shell
+    resource: '*'
+    effect: allow
 ---
 
 Before starting the task, read `.agents/agents/senior-qa.md` from the repository root and follow its role instructions in full.
