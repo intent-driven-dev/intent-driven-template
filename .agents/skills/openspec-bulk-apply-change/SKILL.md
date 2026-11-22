@@ -74,6 +74,7 @@ Use this skill for requests to apply multiple OpenSpec changes in parallel. The 
    For each executable candidate change:
 
    - Create a git worktree under `.worktrees/<change>` unless the user specified another root.
+   - Resolve each created worktree directory to its absolute canonical path (resolving symlinks) and record it as the worker's expected root. Do not infer that root from the worker's inherited directory.
    - Keep the parent agent out of direct implementation work in the main workspace.
    - Do not create commits, branches, or merges unless the user explicitly approved them.
 
@@ -81,13 +82,15 @@ Use this skill for requests to apply multiple OpenSpec changes in parallel. The 
 
    For each executable candidate change:
 
-   - Dispatch one subagent per change using the worker selected by the routing check. Set its working directory to the assigned worktree when the CLI supports it. Otherwise pass the absolute worktree path and direct the subagent to use it for all file and command operations.
+   - Dispatch one subagent per change using the worker selected by the routing check. Pass its expected canonical root and set its working directory when supported. A path in prompt text does not automatically change any tool's working directory; require explicit tool targeting as described below. If reliable worktree targeting is unavailable, pause the affected change rather than falling back to the parent workspace.
    - Run all delegated apply flows in parallel.
    - Do not apply any change directly in the parent agent.
 
    Subagent prompt requirements:
 
-   - Work only in the assigned worktree.
+   - Before implementation, run `git rev-parse --show-toplevel` with the shell tool's `workdir` explicitly set to the assigned worktree. Canonicalize the returned path and compare it with the expected canonical root supplied by the parent. On command failure or mismatch, halt the assigned work and report both paths or the error; do not continue in another workspace.
+   - For all delegated project work, including reading project instructions and tooling, use absolute file-tool paths scoped to the assigned worktree and set every shell operation's `workdir` explicitly to that worktree. Resolve paths before use; do not follow symlinks outside it or rely on inherited directories, a previous `cd`, or prompt text. These worker requirements do not apply to the parent's discovery or worktree creation steps.
+   - Propagate the expected canonical root, absolute-path boundary, and explicit shell `workdir` requirements to every nested delegate, including implementation and verification specialists. Require each child to perform the same git-root check before its assigned work; pause if a child cannot reliably target the worktree or halt if its check fails.
    - Use `openspec-git-discipline` before applying.
    - Load and follow `openspec-apply-change` for the assigned change.
    - Load and follow `openspec-verify-change` for that change after apply work is complete.
@@ -144,6 +147,7 @@ Use this skill for requests to apply multiple OpenSpec changes in parallel. The 
 
 ## Guardrails
 
+- Worktree checks and explicit paths are operational guardrails against accidental cross-workspace work, not a security sandbox or filesystem access control.
 - Do not auto-merge.
 - Do not auto-archive.
 - Do not bulk-apply when only one candidate change remains.
