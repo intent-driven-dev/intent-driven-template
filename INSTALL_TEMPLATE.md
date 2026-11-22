@@ -54,18 +54,28 @@ Merge these files when they already exist:
 
 1. Clone or locate the source template repository.
 2. Inspect the target project for existing configuration and documentation.
+   Before copying OpenCode role files, check existing files in
+   `.opencode/agents/` for name collisions with the template roles. Explain any
+   conflict and ask the user before overwriting; preserve their configuration
+   unless they approve the replacement.
 3. Copy missing template directories and files into the target project.
 4. Merge the OpenSpec git-discipline and Codex delegation instructions from
    `AGENTS.md`, preserving existing user instructions.
 5. If `opencode.json`, `openspec/`, `.opencode/`, `.codex/`, or `.agents/` already exist,
    compare the template version with the target version and ask the user before
-   replacing or restructuring anything. Check `.opencode/agent/` and the
-   project's OpenCode JSON configuration for existing definitions with the same
-   names before copying the new role files.
+   replacing or restructuring anything.
 6. Keep the target project's product code, package files, application docs, and
    existing tests unchanged unless the user explicitly asks for changes.
 7. Verify the resulting file tree and summarize exactly what changed. To start
    a workflow, ask either CLI to use a skill by name, such as `openspec-propose`.
+
+This installer targets OpenCode V2 and manages OpenCode agents only in
+`.opencode/agents/`. It does not inspect or migrate legacy `.opencode/agent/`
+definitions or scan OpenCode JSON configuration for agent-name collisions.
+Users are responsible for ensuring that template agent IDs are not also defined
+in their OpenCode JSON configuration. Still review an existing `opencode.json`
+for general installation safety and obtain approval before replacing or
+restructuring it.
 
 Edit shared role instructions in `.agents/agents/`. Set model and effort
 overrides in the corresponding role file under `.opencode/agents/` or
