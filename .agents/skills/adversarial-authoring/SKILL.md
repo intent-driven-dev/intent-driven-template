@@ -21,14 +21,21 @@ The goal is to reduce single-perspective bias by having one configured subagent 
    - Project context
    - Artifact-specific rules
    - Dependency artifacts already completed
-3. Start the authoring round with the `adversarial-author` subagent.
-4. Send the author draft and the original task context to the `adversarial-reviewer` subagent.
-5. Reconcile the review yourself as the primary agent:
+3. Start the authoring round with the `adversarial-author` subagent. Require a completed, successful report containing the full draft; wait for it before starting the reviewer.
+4. Send that full draft and the original task context to the `adversarial-reviewer` subagent. Require a completed, successful review report before proceeding.
+5. Reconcile the completed review yourself as the primary agent:
    - Accept corrections that improve correctness, clarity, requirements coverage, or risk handling.
    - Reject suggestions that conflict with the user request, artifact template, OpenSpec instructions, or project rules.
    - Ask the user only if the disagreement changes product intent or cannot be resolved from available context.
-6. Write the final artifact to the requested output path.
-7. Write council notes beside the artifact using the naming convention below.
+6. Only after both stages complete successfully, write the final artifact to the requested output path as the primary agent.
+7. As the primary agent, write council notes beside the artifact using the naming convention below.
+
+### Completion gates (all CLIs)
+
+- A launch acknowledgement, child/session ID, progress update, or blocked report is not successful completion. Inspect the returned report for stage completion and the required content; do not infer success from a notification alone.
+- For background children, wait for the harness's native completion notification/report before advancing. OpenCode children run in the background and report when idle; idle does not necessarily mean success. Do not poll or invent wait/status tools.
+- If either stage fails, is unavailable, blocked, or returns an incomplete report (including a missing full author draft), report an incomplete round and ask the user before proceeding with primary-only fallback. Do not fabricate a completed review, final artifact, or completed council notes.
+- If the user authorizes fallback, the primary agent writes both the artifact and notes. Explicitly identify the omitted or incomplete stage and the authorization in the notes; do not claim a complete council round or invent that stage's findings.
 
 ## Subagents
 
@@ -82,4 +89,4 @@ Council notes are an audit trail, not the canonical artifact. Keep them concise 
 - Do not copy project context or rules verbatim into the final artifact unless the template requires it.
 - Prefer one author round and one review round. Add a second author revision round only when the reviewer identifies a concrete correctness issue.
 - If subagent output conflicts, the primary agent owns the final synthesis.
-- If subagent execution is unavailable, state that adversarial authoring could not be completed and ask whether to proceed with primary-agent authoring only.
+- Never bypass the completion gates without explicit user authorization for primary-only fallback.
