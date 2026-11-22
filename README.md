@@ -2,6 +2,22 @@
 
 An [OpenSpec](https://github.com/Fission-AI/OpenSpec) template for Intent-Driven Development using OpenCode, Codex CLI, GitHub Copilot CLI, and Claude Code with the `proposal -> specs -> design -> adr -> tasks` workflow and optional collaboration workflows.
 
+## What's New In 2.0
+
+2.0 adds a basic setup for several agents: OpenCode, Codex CLI, GitHub Copilot CLI, and Claude Code. All of them share the same OpenSpec configuration, skills, and role instructions (`.agents/`), so you can switch between agents in the same repository at any time. Adding another agent is a small, additive change: a thin agent definition that points to the shared instructions in `.agents/agents/`.
+
+> **2.0.0 is still evolving.** Please [report issues](https://github.com/intent-driven-dev/intent-driven-template/issues) you run into.
+
+### Using OpenSpec 1.x And OpenCode Only (Legacy)
+
+The previous setup supported only OpenCode and OpenSpec 1.x. It remains available as the [`v1.0.0` tag](https://github.com/intent-driven-dev/intent-driven-template/releases/tag/v1.0.0) and the [`1.x` branch](https://github.com/intent-driven-dev/intent-driven-template/tree/1.x):
+
+```bash
+git clone --branch v1.0.0 https://github.com/intent-driven-dev/intent-driven-template.git
+```
+
+The `1.x` branch is maintenance-only; new capabilities land in 2.x.
+
 ## Walkthrough (OpenCode)
 
 [![Spec-Driven Development with OpenSpec and OpenCode](https://img.youtube.com/vi/o1w3V3DElV4/maxresdefault.jpg)](https://www.youtube.com/watch?v=o1w3V3DElV4)
@@ -132,6 +148,10 @@ definition loads the corresponding shared file before starting a task.
 | `adversarial-reviewer` | Reviews the author's draft with challenges and improvement suggestions. |
 | `senior-dev` | Implements src work test-first through strict red-green-refactor, following the `test-driven-development` skill. |
 | `senior-qa` | Authors acceptance tests, step definitions, and runner configuration, following the `acceptance-test-authoring` skill. |
+
+### Adding Another Agent
+
+Create that agent's native definitions (for example `.<agent>/agents/<role>.md`) so each one tells the agent to read and follow `.agents/agents/<role>.md`. Skills in `.agents/skills/` and guidance in `AGENTS.md` are shared, so most agents need nothing more. Then add a short section below describing its model settings.
 
 ### OpenCode
 
