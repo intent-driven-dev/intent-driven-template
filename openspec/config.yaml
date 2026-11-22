@@ -1,25 +1,28 @@
 schema: intent-driven
 
-#   context: |
-#     Tech stack: TypeScript, React, Node.js
-#     We use conventional commits
-#     Domain: e-commerce platform
-#
-#     Use senior-dev sub-agent for all src related work and senior-qa for acceptance tests.
-#     Do not optimize the batch the tasks for senior-dev and senior-qa, call them as many times as necessary in smaller batches as dev and qa work may be interleaved.
+context: |
+  PollCast is an intuitive web application allowing users to instantly create,
+  share, and track custom polls. To prevent spam without the friction of
+  passwords, the platform features a streamlined UI where participants simply
+  cast votes using their email address as a unique identifier, guaranteeing
+  highly accurate and duplicate-free poll results.
+
+  Tech stack: Node.js, server-side rendered Express, JSON file store to begin with.
 
 rules:
   proposal:
-    - Must use grill-me skill
+    # - Must use grill-me skill
     # - Must use adversarial-authoring skill
     # - Must use glossary skill
   design:
-    - Must use c4-diagrams skill
+    # - Must use c4-diagrams skill
     # - Must use glossary skill
-  adr: # - Ask me which decisions to record
-  specs: # - Must use spec-as-source skill
+  adr:
+    - Ask me which decisions to record
+  specs:
+    - Must use spec-as-source skill
   tasks:
-    # - Must use spec-as-source skill
+    - Must use spec-as-source skill
 
 operations:
   apply:
