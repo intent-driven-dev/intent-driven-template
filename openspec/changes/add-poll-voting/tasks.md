@@ -1,8 +1,8 @@
 ## 1. Acceptance setup
 
 - [x] 1.1 Confirm the acceptance stack in `openspec/config.yaml` and configure it if needed.
-- [ ] 1.2 Set up a bootable application skeleton and an independent acceptance-test project using the selected stack.
-- [ ] 1.3 Configure the spec-as-source extractor, runner, Gherkin lint, HTML reporting, generated-file exclusions, and run instructions using the acceptance-test-authoring skill.
+- [x] 1.2 Set up a bootable application skeleton and an independent acceptance-test project using the selected stack.
+- [x] 1.3 Configure the spec-as-source extractor, runner, Gherkin lint, HTML reporting, generated-file exclusions, and run instructions using the acceptance-test-authoring skill.
 
 ## 2. Voting scenarios
 

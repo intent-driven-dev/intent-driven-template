@@ -1,0 +1,32 @@
+{
+  // Pinned gherkin-lint config for the EXTRACTED .feature files under
+  // .extracted/ (gherkin-lint has no defaults; a config file is mandatory).
+  // Copy to acceptance-tests/.gherkin-lintrc (that name is auto-discovered).
+  // Line numbers it reports are valid in the source spec.md files.
+  //
+  // Deliberately OFF because enabling these makes "fix all lint issues"
+  // unsatisfiable with this toolchain:
+  //   no-multiple-empty-lines / new-line-at-eof / indentation:
+  //     extraction pads prose to blank lines to preserve line numbers.
+  //   no-dupe-feature-names:
+  //     a delta spec and its source-of-truth spec share the Feature name.
+  //   no-dupe-scenario-names:
+  //     a MODIFIED delta copies the whole Rule, scenario names included.
+  "no-empty-file": "on",
+  "no-files-without-scenarios": "on",
+  "no-unnamed-features": "on",
+  "no-unnamed-scenarios": "on",
+  "no-dupe-feature-names": "off",
+  "no-dupe-scenario-names": "off",
+  "no-duplicate-tags": "on",
+  "no-partially-commented-tag-lines": "on",
+  "one-space-between-tags": "on",
+  "no-empty-background": "on",
+  "no-background-only-scenario": "on",
+  "no-scenario-outlines-without-examples": "on",
+  "no-examples-in-scenarios": "on",
+  "no-trailing-spaces": "on",
+  "no-multiple-empty-lines": "off",
+  "new-line-at-eof": "off",
+  "indentation": "off"
+}

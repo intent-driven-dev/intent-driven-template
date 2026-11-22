@@ -1,0 +1,16 @@
+{
+  "name": "pollcast-acceptance-tests",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "test": "cucumber-js",
+    "test:specs": "cucumber-js -p specs",
+    "lint:specs": "node extract-gherkin.cjs && gherkin-lint .extracted"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^12.9.0",
+    "cheerio": "^1.2.0",
+    "gherkin-lint": "^4.2.4",
+    "glob": "^14.0.6"
+  }
+}

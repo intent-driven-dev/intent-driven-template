@@ -52,3 +52,7 @@ tmp/
 temp/
 *.tmp
 *.log
+
+# Acceptance tests
+acceptance-tests/.extracted/
+acceptance-tests/reports/
