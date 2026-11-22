@@ -3,8 +3,9 @@
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { BeforeAll, AfterAll } = require('@cucumber/cucumber');
+const { BeforeAll, AfterAll, Before } = require('@cucumber/cucumber');
 const { startApp, stopApp } = require('./app-process');
+const pollStore = require('./poll-store');
 
 let app;
 let dataDir;
@@ -20,4 +21,8 @@ BeforeAll({ timeout: 15000 }, async function () {
 AfterAll(async function () {
   if (app) await stopApp(app.child);
   if (dataDir) fs.rmSync(dataDir, { recursive: true, force: true });
+});
+
+Before(function () {
+  pollStore.reset(global.__pollcast.dataFile);
 });
