@@ -11,6 +11,11 @@ current project without overwriting project-specific work blindly.
 This first-time install guide does not cover upgrade/version tracking. Handle
 upgrade instructions in a separate change.
 
+## Requirements
+
+This template requires OpenSpec 2.x. If the user runs OpenCode, it must be OpenCode 2.x.
+Check the installed versions and tell the user if they are older.
+
 ## Source Template
 
 Clone a fresh local copy of the template repository outside the target project:

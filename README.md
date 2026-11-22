@@ -2,7 +2,7 @@
 
 An [OpenSpec](https://github.com/Fission-AI/OpenSpec) template for Intent-Driven Development using OpenCode, Codex CLI, GitHub Copilot CLI, and Claude Code with the `proposal -> specs -> design -> adr -> tasks` workflow and optional collaboration workflows.
 
-## Walkthrough
+## Walkthrough (OpenCode)
 
 [![Spec-Driven Development with OpenSpec and OpenCode](https://img.youtube.com/vi/o1w3V3DElV4/maxresdefault.jpg)](https://www.youtube.com/watch?v=o1w3V3DElV4)
 
@@ -11,6 +11,11 @@ Read the full walkthrough:
 [Spec-Driven Development with OpenSpec and OpenCode](https://intent-driven.dev/blog/2026/05/10/spec-driven-development-openspec-opencode/)
 
 [SDD with Multi-Model Spec Review and Glossary](https://intent-driven.dev/blog/2026/06/27/sdd-adversarial-authoring-glossary/)
+
+## Requirements
+
+- OpenSpec 2.x
+- OpenCode 2.x, Codex CLI, GitHub Copilot CLI, or Claude Code (any one is enough)
 
 ## How To Use This Template
 
@@ -82,7 +87,7 @@ The bundled OpenSpec lifecycle skills are `openspec-new-change`, `openspec-propo
 
 | Skill | Location | Purpose | Enabled Or Updated By |
 |-------|----------|---------|-----------------------|
-| `openspec-bulk-apply-change` | `.agents/skills/` | Applies multiple active changes concurrently in isolated worktrees with parallel verification. | Ask either CLI to use the skill for named changes or for all active changes. |
+| `openspec-bulk-apply-change` | `.agents/skills/` | Applies multiple active changes concurrently in isolated worktrees with parallel verification. | Ask any supported CLI to use the skill for named changes or for all active changes. |
 | `adversarial-authoring` | `.agents/skills/` | Runs author and reviewer agents in sequence to reduce model bias in drafts. | Refer to the skill under rule in the rules section of `openspec/config.yaml`. |
 | `grill-me` | `.agents/skills/` | Interrogates plans and designs with probing questions to surface hidden assumptions. | Refer to this skill under rules section in `openspec/config.yaml`. |
 | `c4-diagrams` | `.agents/skills/` | Visualises system architecture using C4 model levels in ASCII or Mermaid. | Refer to this skill under `design` rule in `openspec/config.yaml`. |
