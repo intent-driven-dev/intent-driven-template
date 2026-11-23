@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three Panel Layout Example</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .three-panel-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .panel {
+            flex: 1 1 calc(33.333% - 15px);
+            padding: 20px;
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            min-height: 200px;
+        }
+
+        .panel:nth-child(1) {
+            background-color: #e3f2fd;
+        }
+
+        .panel:nth-child(2) {
+            background-color: #f1f8e9;
+        }
+
+        .panel:nth-child(3) {
+            background-color: #fff3e0;
+        }
+
+        /* Responsive behavior */
+        @media screen and (max-width: 768px) {
+            .three-panel-container {
+                flex-direction: column;
+            }
+            
+            .panel {
+                min-height: 150px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .panel {
+                padding: 15px;
+                min-height: 120px;
+            }
+        }
+
+        h1, h2 {
+            margin-bottom: 10px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Three Panel Layout Example</h1>
+    
+    <div class="three-panel-container">
+        <section class="panel">
+            <h2>Panel 1</h2>
+            <p>This is the first panel of the three-panel layout. It displays content in a clean, organized way.</p>
+            <p>The panels are designed to be responsive and adapt to different screen sizes.</p>
+        </section>
+        
+        <section class="panel">
+            <h2>Panel 2</h2>
+            <p>This is the second panel showing another section of content.</p>
+            <p>Each panel maintains equal width on desktop screens but stacks vertically on mobile devices.</p>
+        </section>
+        
+        <section class="panel">
+            <h2>Panel 3</h2>
+            <p>This is the third and final panel in our three-panel layout implementation.</p>
+            <p>The design ensures readability across all device sizes while maintaining a clean aesthetic.</p>
+        </section>
+    </div>
+
+    <script>
+        // Simple JavaScript to demonstrate responsive behavior
+        function updatePanelCount() {
+            const container = document.querySelector('.three-panel-container');
+            const panels = document.querySelectorAll('.panel');
+            
+            if (window.innerWidth <= 768) {
+                container.style.flexDirection = 'column';
+                console.log('Panels stacked vertically on smaller screen');
+            } else {
+                container.style.flexDirection = 'row';
+                console.log('Panels side-by-side on larger screen');
+            }
+        }
+
+        // Initial check
+        updatePanelCount();
+        
+        // Update on window resize
+        window.addEventListener('resize', updatePanelCount);
+    </script>
+</body>
+</html>
