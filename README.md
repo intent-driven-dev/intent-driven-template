@@ -197,6 +197,37 @@ line (`sonnet`, `opus`, `haiku`, a full model ID, or `inherit`) to the frontmatt
 `.claude/agents/adversarial-author.md` and `.claude/agents/adversarial-reviewer.md`, using
 different values for each.
 
+### Hermes (Claude Code CLI)
+
+Hermes agent definitions live in `.hermes/agents/<role>.md` and point to the shared instructions
+in `.agents/agents/<role>.md`. Each agent's frontmatter configures `model`, `thinking_budget`,
+and optional `tools` restrictions. Hermes discovers the shared skills in `.agents/skills/`
+through symlinks in `.hermes/skills/` and reads `AGENTS.md` for repository guidance.
+
+Spawn subagents with `delegate_task` and include the shared role instructions from
+`.agents/agents/<role>.md` in the delegation context. Hermes supports granular per-agent
+model and thinking budget control in frontmatter:
+
+```yaml
+---
+name: adversarial-author
+model: anthropic/claude-opus-4-20250514  # or sonnet/opus/haiku/inherit
+thinking_budget: high                     # or low/medium/max
+tools: [read_file, search_files]          # optional tool restrictions
+---
+```
+
+**Model values:**
+- Full model ID: `anthropic/claude-sonnet-4-5-20250929`, `anthropic/claude-opus-4-20250514`
+- Short aliases: `sonnet`, `opus`, `haiku` (map to latest versions)
+- `inherit` - use parent session's model (default if omitted)
+
+**Thinking budget:** `low`, `medium`, `high`, or `max` (controls reasoning depth and speed).
+
+For cross-model adversarial review, set different `model` values in
+`.hermes/agents/adversarial-author.md` (e.g., `opus`) and
+`.hermes/agents/adversarial-reviewer.md` (e.g., `sonnet`).
+
 ### GitHub Copilot CLI
 
 Repository custom agents live in `.github/agents/<role>.agent.md`. The four
