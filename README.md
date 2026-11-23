@@ -221,3 +221,25 @@ Repository model and reasoning-effort settings belong in
 `.github/copilot/settings.local.json`. Use `/model` for session or repository
 model defaults and `/subagents` for per-subagent model and effort settings.
 There is no separate `.copilot/` repository configuration folder.
+
+### Hermes
+
+Hermes has no repository-level subagent-definition file that it reads at dispatch
+time the way the other CLIs do, so there is no `.hermes/agents/<role>.md` to add:
+a file placed there would be inert. Hermes dispatches named roles through its
+`delegate_task` tool, and the role instructions still come from
+`.agents/agents/<role>.md` the same way; the model and reasoning effort for that
+delegated run come from the host's own delegation settings
+(`delegation.provider` / `delegation.model` in the active Hermes profile's
+`config.yaml`), not from a file in this repository. For example:
+
+```yaml
+delegation:
+  provider: anthropic
+  model: claude-opus-5
+```
+
+Because that setting lives in the user's Hermes profile rather than the repo, cross-model
+review (distinct models for `adversarial-author` vs `adversarial-reviewer`) isn't
+configurable per-role from this template; both inherit the same delegation
+default unless the user overrides it per task when invoking `delegate_task`.
